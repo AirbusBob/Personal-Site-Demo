@@ -38,27 +38,28 @@
     </style>
 </head>
 <body>
-    <video id="videoPlayer" onended="showEndText()">
+    <video id="videoPlayer" onended="showEndText()" preload="auto">
         <source src="VideoSeq.mp4" type="video/mp4">
     </video>
-    <audio id="audioPlayer">
+    <audio id="audioPlayer" preload="auto">
         <source src="AudioSeq.mp3" type="audio/mpeg">
     </audio>
     <div id="endText">Ehrmantraut</div>
 
     <script>
-        setTimeout(() => {
-            const video = document.getElementById('videoPlayer');
-            const audio = document.getElementById('audioPlayer');
-            video.style.display = 'block';
-            
-            // Start both video and audio together
-            Promise.all([
-                video.play(),
-                audio.play()
-            ]).catch(error => console.log("Playback failed:", error));
-            
-        }, 3000);
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const video = document.getElementById('videoPlayer');
+                const audio = document.getElementById('audioPlayer');
+                video.style.display = 'block';
+                
+                // Start both video and audio together
+                Promise.all([
+                    video.play().catch(e => console.log("Video playback failed:", e)),
+                    audio.play().catch(e => console.log("Audio playback failed:", e))
+                ]);
+            }, 3000);
+        });
 
         function showEndText() {
             document.getElementById('videoPlayer').style.display = 'none';
