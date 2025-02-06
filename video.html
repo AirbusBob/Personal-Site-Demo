@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        #videoPlayer {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        #endText {
+            color: white;
+            font-size: 4rem;
+            display: none;
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <video id="videoPlayer" onended="showEndText()">
+        <source src="VideoSeq.mp4" type="video/mp4">
+    </video>
+    <audio id="audioPlayer">
+        <source src="AudioSeq.mp3" type="audio/mpeg">
+    </audio>
+    <div id="endText">Ehrmantraut</div>
+
+    <script>
+        setTimeout(() => {
+            const video = document.getElementById('videoPlayer');
+            const audio = document.getElementById('audioPlayer');
+            video.style.display = 'block';
+            
+            // Start both video and audio together
+            Promise.all([
+                video.play(),
+                audio.play()
+            ]).catch(error => console.log("Playback failed:", error));
+            
+        }, 3000);
+
+        function showEndText() {
+            document.getElementById('videoPlayer').style.display = 'none';
+            document.getElementById('audioPlayer').pause();
+            document.getElementById('endText').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
