@@ -24,6 +24,34 @@
             display: none;
         }
 
+        /* Hide default controls and show custom time bar */
+        #videoPlayer::-webkit-media-controls {
+            display: none !important;
+        }
+
+        #videoPlayer::-webkit-media-controls-enclosure {
+            display: none !important;
+        }
+
+        #videoPlayer::-webkit-media-controls-panel {
+            display: none !important;
+        }
+
+        /* Only show progress bar */
+        #videoPlayer::-webkit-media-controls-timeline {
+            display: flex !important;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 2;
+        }
+
+        /* Hide audio player visually but keep functionality */
+        #audioPlayer {
+            position: fixed;
+            bottom: -9999px;
+        }
+
         #endText {
             color: white;
             font-size: 4rem;
@@ -38,7 +66,7 @@
     </style>
 </head>
 <body>
-    <video id="videoPlayer" onended="showEndText()" preload="auto">
+    <video id="videoPlayer" onended="showEndText()" preload="auto" muted controls>
         <source src="VideoSeq.mp4" type="video/mp4">
     </video>
     <audio id="audioPlayer" preload="auto">
@@ -52,6 +80,7 @@
                 const video = document.getElementById('videoPlayer');
                 const audio = document.getElementById('audioPlayer');
                 video.style.display = 'block';
+                video.muted = false; // Unmute after autoplay starts
                 
                 // Start both video and audio together
                 Promise.all([
