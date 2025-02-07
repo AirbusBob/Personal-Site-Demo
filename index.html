@@ -212,6 +212,47 @@
         src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" 
         id="tcx-callus-js">
     </script>
+
+    <!-- Firebase Visitor Logging -->
+    <script type="module">
+        // Import Firebase services
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1ZlXrj0xJ92JMAAOx9hqplE7x6YT5XHI",
+            authDomain: "frasr-logger.firebaseapp.com",
+            projectId: "frasr-logger",
+            storageBucket: "frasr-logger.firebasestorage.app",
+            messagingSenderId: "523476975536",
+            appId: "1:523476975536:web:a40714a3a46099f93b6075"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Get visitor IP & details
+        fetch("https://ipapi.co/json/")
+            .then(response => response.json())
+            .then(async (data) => {
+                try {
+                    await addDoc(collection(db, "visitors"), {
+                        ip: data.ip,
+                        city: data.city,
+                        country: data.country_name,
+                        isp: data.org,
+                        browser: navigator.userAgent,
+                        screenSize: `${window.screen.width}x${window.screen.height}`,
+                        visitTime: new Date().toLocaleString()
+                    });
+                    console.log("Visitor logged:", data);
+                } catch (error) {
+                    console.error("Error logging visitor:", error);
+                }
+            });
+    </script>
 </body>
 </html>
 
