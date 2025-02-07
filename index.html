@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homelab</title>
-    <meta http-equiv="refresh" content="0; url=video.html">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="Funk343.png">
     <style>
@@ -16,11 +15,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, 
-                #1a237e 0%,
-                #004d40 50%,
-                #1b5e20 100%
-            );
+            background: rgb(2,0,36);
+            background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(41,41,103,1) 24%, rgba(0,0,0,1) 81%);
         }
         
         .container {
@@ -71,24 +67,6 @@
             }
         }
 
-        .mw-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 12px 24px;
-            background: #2c3e50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mw-button:hover {
-            background: #34495e;
-            transform: scale(1.05);
-        }
-
         .about-button {
             position: fixed;
             bottom: 20px;
@@ -107,68 +85,112 @@
             transform: scale(1.05);
         }
 
-        .fullscreen-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in;
-            z-index: 1000;
+        .project-section {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
         }
 
-        .white-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgb(0, 249, 212);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 2s ease-in-out;
+        .project-heading {
+            font-size: 2.5rem;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            animation: fadeIn 1s ease-in;
         }
 
-        .visible {
-            opacity: 1;
-            visibility: visible;
+        .ehrmantraut-btn {
+            padding: 20px 40px;
+            font-size: 1.8rem;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            animation: slideUp 1s ease-out;
+        }
+
+        .ehrmantraut-btn:hover {
+            background: #34495e;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
     </style>
     <script>
-        function showImage() {
-            const image = document.getElementById('fullscreen-image');
-            image.classList.add('visible');
-            
-            // After 7.4 seconds, start fading out
-            setTimeout(() => {
-                image.classList.remove('visible');
-            }, 7400);
+        const quotes = [
+            {
+                text: "The human spirit must prevail over technology.",
+                author: "Albert Einstein",
+                title: "Scientist"
+            },
+            {
+                text: "This is the whole point of technology. It creates an appetite for immortality on the one hand. It threatens universal extinction on the other. Technology is lust removed from nature.",
+                author: "Don DeLillo",
+                title: "Author"
+            },
+            {
+                text: "Science and technology revolutionize our lives, but memory, tradition and myth frame our response.",
+                author: "Arthur Schlesinger",
+                title: "Historian"
+                },
+            {
+                text: "One machine can do the work of fifty ordinary men. No machine can do the work of one extraordinary man.",
+                author: "Elbert Hubbard",
+                title: "Author"
+            },
+            {
+                text: "All that we see or seem is but a dream within a dream.",
+                author: "Edgar Allan Poe",
+                title: "Poet"
+            }
+        ];
+
+        function getRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            return quotes[randomIndex];
         }
 
-        function checkPassword() {
-            const password = prompt("Please enter password:");
-            if (password === "Yorke") {
-                showImage();
-            } else if (password !== null) {
-                alert("Incorrect password");
-            }
+        function updateQuote() {
+            const quote = getRandomQuote();
+            document.querySelector('.quote').innerHTML = `
+                "${quote.text}"
+                <div class="author">- ${quote.author} (${quote.title})</div>
+            `;
         }
+
+        document.addEventListener('DOMContentLoaded', updateQuote);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ehrmantrautBtn = document.querySelector('.ehrmantraut-btn');
+            ehrmantrautBtn.addEventListener('click', function() {
+                // Create a link element
+                const downloadLink = document.createElement('a');
+                downloadLink.href = 'Mike Game.zip'; // Make sure this file exists in your project directory
+                downloadLink.download = 'Mike Game.zip';
+                
+                // Trigger the download
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+        });
     </script>
 </head>
 <body>
     <div class="container">
         <h1>Frasr Media</h1>
         <div class="quote">
-            "The people who are crazy enough to think they can change the world are the ones who do"
-            <div class="author">- Steve Jobs</div>
+            <!-- Quote will be inserted here by JavaScript -->
+        </div>
+        <div class="project-section">
+            <h2 class="project-heading">Current Project(s)</h2>
+            <button class="ehrmantraut-btn">Ehrmantraut</button>
         </div>
     </div>
-    <img src="1.jpeg" alt="" id="fullscreen-image" class="fullscreen-image">
-    <div id="white-screen" class="white-screen"></div>
-    <button class="mw-button" onclick="checkPassword()">For MW</button>
 </body>
 </html>
 
