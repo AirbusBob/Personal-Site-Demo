@@ -213,7 +213,7 @@
         id="tcx-callus-js">
     </script>
 
-    <!-- Firebase Visitor Logging with Google Sheets Integration -->
+    <!-- Firebase Visitor Logging -->
     <script type="module">
         // Import Firebase services
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
@@ -234,43 +234,25 @@
         const db = getFirestore(app);
 
         // Google Apps Script Web App URL
-        const googleScriptURL = "https://script.google.com/macros/s/AKfycbxvOn5CZFqqRevN9-O23K6j0whGNLr19XmxburPXB_lZN48zmltNv41BCiyErQs27C7xA/exec";
-
         // Get visitor IP & details
         fetch("https://ipapi.co/json/")
             .then(response => response.json())
             .then(async (data) => {
-                const visitorData = {
-                    ip: data.ip,
-                    city: data.city,
-                    country: data.country_name,
-                    isp: data.org,
-                    browser: navigator.userAgent,
-                    screenSize: `${window.screen.width}x${window.screen.height}`,
-                    visitTime: new Date().toLocaleString()
-                };
-
-                // Log visitor to Firebase
                 try {
-                    await addDoc(collection(db, "visitors"), visitorData);
-                    console.log("Visitor logged in Firebase:", data);
+                    await addDoc(collection(db, "visitors"), {
+                        ip: data.ip,
+                        city: data.city,
+                        country: data.country_name,
+                        isp: data.org,
+                        browser: navigator.userAgent,
+                        screenSize: `${window.screen.width}x${window.screen.height}`,
+                        visitTime: new Date().toLocaleString()
+                    });
+                    console.log("Visitor logged:", data);
                 } catch (error) {
-                    console.error("Error logging visitor in Firebase:", error);
+                    console.error("Error logging visitor:", error);
                 }
-
-                // Log visitor to Google Sheets
-                fetch(googleScriptURL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(visitorData)
-                })
-                .then(response => response.text())
-                .then(data => console.log("Google Sheets log success:", data))
-                .catch(error => console.error("Error logging to Google Sheets:", error));
             });
     </script>
 </body>
 </html>
-
-
-
