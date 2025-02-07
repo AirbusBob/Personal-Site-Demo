@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homelab</title>
+    <title>Betty-Media</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="Funk343.png">
     <style>
@@ -119,6 +119,13 @@
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+
+        call-us-selector {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+        }
     </style>
     <script>
         const quotes = [
@@ -191,6 +198,24 @@
             <button class="ehrmantraut-btn">Ehrmantraut</button>
         </div>
     </div>
+    
+    <!-- 3CX Live Chat Widget with real-time updates -->
+    <!--Use the below code snippet to provide real time updates to the live chat plugin without the need of copying and paste each time to your website when changes are made via PBX-->
+    <call-us-selector 
+        phonesystem-url="https://1198.3cx.cloud" 
+        party="LiveChat809372"
+        style="--call-us-main-accent-color:#14A5FF;
+               --call-us-main-background-color:#404040;
+               --call-us-plate-background-color:#373737;
+               --call-us-plate-font-color:#D9D9D9;">
+    </call-us-selector>
+    
+    <!-- 3CX Chat Script -->
+    <script 
+        async 
+        src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" 
+        id="tcx-callus-js">
+    </script>
 </body>
 </html>
 
